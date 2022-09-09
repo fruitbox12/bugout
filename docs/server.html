@@ -18,7 +18,7 @@
 <pre id="log"></pre>
 </body>
 <script>
-  log("*BUGOUT*\n");
+  log("*WEBRPC*\n");
   log("Server log started.\n");
 
   // instantiate our bugout instance
@@ -28,7 +28,7 @@
   localStorage["bugout-demo-server-seed"] = b.seed;
 
   // log this server's address
-  log("\nThis browser tab is running a Bugout server.");
+  log("\nThis browser tab is running a WebRPC node.");
   log("This server's address:", b.address());
   log("announcing...");
 
@@ -49,7 +49,7 @@
         log();
       }
       log(clientURL + "\n");
-      log("Connect back to this server-in-a-tab using the link above.");
+      log("Connect back to this rpc-in-a-tab using the link above.");
     }
     log("connections:", c);
   });
@@ -134,8 +134,8 @@
 // Edit this to change the live API this server is running:
 
 // respond to ping calls by sending back "pong"
-b.register("ping", function(pk, args, cb) {
-  args["pong"] = true;
+b.register("POST", function(pk, args, cb) {
+  args["200"] = true;
   cb(args);
 }, "Respond to ping with 'pong'.");
 </script>
