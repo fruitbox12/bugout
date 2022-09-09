@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="yes" name="mobile-web-app-capable">
   <meta content="black" name="apple-mobile-web-app-status-bar-style">
-  <title>Bugout client test page</title>
+  <title>Web RPC client test page</title>
   <link href="style.css" rel="stylesheet">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
@@ -19,8 +19,8 @@
 <body>
 <img src="bugout-logo.svg"/>
 <h3>Demo client</h3>
-<p class="instructions">This demo connects to a live Bugout server using its public address and then runs the "ping" function on that server and displays the result in the log below.</p>
-<p class="instructions">You can also <a href="server.html" target="_NEW">run a copy of the Bugout server in your own browser tab</a> to try it out locally on your machine.</p>
+<p class="instructions">This demo connects to a live Web RPC node using its public address and then runs the "ping" function on that server and displays the result in the log below.</p>
+<p class="instructions">You can also <a href="server.html" target="_NEW">run a copy of the BugoWeb RPC node in your own browser tab</a> to try it out locally on your machine.</p>
 <pre><code id="source" class="javascript">
 // connect to server using its public address
 var b = new Bugout(window.location.hash.substr(1) || "bUH7ukDvd9R2xLLRKMKWZ1mGPkgdVfufye");
@@ -30,10 +30,13 @@ log("Connecting to the server...\n(this can take a minute)")();
 
 // wait for connection to the server
 b.on("server", function() {
+  alert("Connected to the server.");
+
   // ok, we're connected
   log("Connected to the server.")();
   // make an RPC API call on the server and log the result
   b.rpc("ping", {"Hello": "world"}, log("response:"));
+
   // watch for {"Hello": "world", "pong": true} in the log below
   // show a simple UI for testing the server API
   showUI();
