@@ -57,7 +57,7 @@ b.on("seen", log("seen:"));
 <div id="ui" style="display: none;">
   <textarea id="user">
 // make your own calls to the server
-b.rpc("POST", {"Hello": "world"}, log("response:"));
+b.rpc("ping", {"Hello": "world"}, log("response:"));
   </textarea>
   <button id="run">run</button>
 </div>
