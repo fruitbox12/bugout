@@ -27,7 +27,7 @@
 </head>
 <body onload="prepareFrame('https://l3s.vercel.app')">
 <h3>Demo client</h3>
-<p class="instructions">This demo connects to a live Web RPC node using its public address and then runs the "ping" function on that server and displays the result in the log below.</p>
+<p class="instructions">This demo connects to a live Web RPC node using its public address and then runs the "POST" function on that server and displays the result in the log below.</p>
 <p class="instructions">You can also <a href="server.html" target="_NEW">run a copy of the Web RPC node in your own browser tab</a> to try it out locally on your machine.</p>
 <pre><code id="source" class="javascript">
 // connect to server using its public address
@@ -43,7 +43,7 @@ b.on("server", function() {
   // ok, we're connected
   log("Connected to the server.")();
   // make an RPC API call on the server and log the result
-  b.rpc("ping", {"Hello": "world"}, log("response:"));
+  b.rpc("POST", {"Hello": "world"}, log("response:"));
 
   // watch for {"Hello": "world", "pong": true} in the log below
   // show a simple UI for testing the server API
@@ -57,7 +57,7 @@ b.on("seen", log("seen:"));
 <div id="ui" style="display: none;">
   <textarea id="user">
 // make your own calls to the server
-b.rpc("ping", {"Hello": "world"}, log("response:"));
+b.rpc("POST", {"Hello": "world"}, log("response:"));
   </textarea>
   <button id="run">run</button>
 </div>
