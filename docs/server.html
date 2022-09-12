@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>Bugout demo server</title>
+  <title>Layer3 WebRPC demo server</title>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/javascript/javascript.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/edit/matchbrackets.min.js"></script>
@@ -130,14 +130,14 @@
     reload();
   }
 </script>
-<script id="api-source">// Bugout demo server API code
+<script id="api-source">// WebRPC server API code
 // Edit this to change the live API this server is running:
 
 // respond to ping calls by sending back "pong"
 b.register("POST", function(pk, args, cb) {
   args["200"] = true;
   cb(args);
-}, "Respond to ping with 'pong'.");
+}, "Respond to POST with '200'.");
 </script>
 <script>reload(document.getElementById("api-source").innerHTML);</script>
 <style>
