@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>Layer3 WebRPC demo server</title>
+  <title>Browser MCP demo server</title>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/javascript/javascript.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/edit/matchbrackets.min.js"></script>
@@ -132,12 +132,67 @@
 </script>
 <script id="api-source">// WebRPC server API code
 // Edit this to change the live API this server is running:
-
+// Weave demo mcp server in the browser API code
+// Edit this to change the live API this server is running:
+// b = new Weave() 
 // respond to ping calls by sending back "pong"
-b.register("POST", function(pk, args, cb) {
-  args["200"] = true;
+b.register("ping", function(pk, args, cb) {
+  args["wow"] = true;
   cb(args);
-}, "Respond to POST with '200'.");
+}, "Respond to ping with 'pong'.");
+b.register("pong", function(pk, args, cb) {
+async function fetchDogApi() {
+  const response = await fetch("https://dogapi.dog/api/v2/breeds");
+  const textResult = await response.text(); // convert response to string
+  return textResult;
+}
+
+// Example usage:
+fetchDogApi().then(result => {
+   cb(result);
+
+  console.log(args["args"]);
+}).catch(err => {
+  console.error(err);
+});  
+}, "Respond to ping with 'pong'.");
+
+b.register("chat", async function(pk, args, cb) {
+  try {
+    // Take user's prompt from args
+    const prompt = args["prompt"];
+
+    // Call OpenAI API
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer API_KEY_HERE`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-search-preview",
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      const chatResponse = data.choices?.[0]?.message?.content || "No response.";
+      cb(chatResponse); // <- RETURNING TEXT DIRECTLY
+
+    } else {
+      console.error("OpenAI Error:", data);
+      cb("error");
+    }
+  } catch (error) {
+    console.error("Error calling ChatGPT:", error);
+    cb(`Error: ${error.message}`);
+  }
+}, "Respond to user prompt with a ChatGPT-generated plain text message.");
+
+
+
 </script>
 <script>reload(document.getElementById("api-source").innerHTML);</script>
 <style>
